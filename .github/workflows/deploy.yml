@@ -15,6 +15,7 @@ jobs:
           repository: pocketbase/pocketbase
           excludes: draft,prerelease
 
+
       - name: Get latest package version
         id: package
         uses: actions/github-script@v6
@@ -24,14 +25,15 @@ jobs:
         with:
           result-encoding: string
           script: |
-            const {package_name,package_type} = process.env;
-            const {data: packages} = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
-              org: context.repo.owner,
-              package_type,
-              package_name
-            })
+            echo "test"
+            # const {package_name,package_type} = process.env;
+            # const {data: packages} = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
+            #   org: context.repo.owner,
+            #   package_type,
+            #   package_name
+            # })
 
-            return packages[0].metadata.container.tags[0] || '0.0.0'
+            # return packages[0].metadata.container.tags[0] || '0.0.0'
 
       - name: Cancel if there is no changes
         if: ${{ steps.pocketbase.outputs.version == steps.package.outputs.result && github.event_name != 'workflow_dispatch' }}
